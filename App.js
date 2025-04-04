@@ -8,6 +8,7 @@ import TodaySchedule from './screens/TodaySchedule';
 import MoodTracking from './screens/MoodTracking';
 import CollaborativeChallenges from './screens/CollaborativeChallenges';
 import EnergyMonitoring from './screens/EnergyMonitoring';
+import LoadingScreen from './screens/LoadingScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -93,6 +94,7 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator
+        initialRouteName="Loading"
         screenOptions={{
           headerStyle: {
             backgroundColor: '#1E1E1E',
@@ -103,6 +105,11 @@ export default function App() {
           },
         }}
       >
+        <Stack.Screen 
+          name="Loading" 
+          component={LoadingScreen} 
+          options={{ headerShown: false }}
+        />
         <Stack.Screen 
           name="Home" 
           component={HomeScreen} 

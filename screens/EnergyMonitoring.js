@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, View, Dimensions } from 'react-native';
-import { LineChart } from 'react-native-chart-kit';
+import { BarChart } from 'react-native-chart-kit';
 
 const EnergyMonitoring = () => {
   // Sample data - this can be replaced with real data later
@@ -17,10 +17,11 @@ const EnergyMonitoring = () => {
 
   return (
     <View style={styles.container}>
-      <LineChart
+      <BarChart
         data={data}
         width={Dimensions.get('window').width - 40}
         height={220}
+        yAxisLabel=""
         chartConfig={{
           backgroundColor: '#1E1E1E',
           backgroundGradientFrom: '#2A2A2A',
@@ -31,13 +32,9 @@ const EnergyMonitoring = () => {
           style: {
             borderRadius: 16,
           },
-          propsForDots: {
-            r: '6',
-            strokeWidth: '2',
-            stroke: '#B4FF39',
-          },
+          barPercentage: 0.7,
+          barRadius: 5,
         }}
-        bezier
         style={styles.chart}
       />
     </View>
