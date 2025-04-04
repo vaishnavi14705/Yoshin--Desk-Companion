@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, View, Dimensions } from 'react-native';
-import { BarChart } from 'react-native-chart-kit';
+import { LineChart } from 'react-native-chart-kit';
 
 const EnergyMonitoring = () => {
   // Sample data - this can be replaced with real data later
@@ -17,11 +17,12 @@ const EnergyMonitoring = () => {
 
   return (
     <View style={styles.container}>
-      <BarChart
+      <LineChart
         data={data}
         width={Dimensions.get('window').width - 40}
         height={220}
         yAxisLabel=""
+        bezier
         chartConfig={{
           backgroundColor: '#1E1E1E',
           backgroundGradientFrom: '#2A2A2A',

@@ -2,10 +2,11 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { StyleSheet, View, Text, TouchableOpacity, StatusBar } from 'react-native';
+import MotivationalQuote from './components/MotivationalQuote';
 
 // Screen components
 import TodaySchedule from './screens/TodaySchedule';
-import MoodTracking from './screens/MoodTracking';
+import YoshinChatbot from './screens/YoshinChatbot';
 import CollaborativeChallenges from './screens/CollaborativeChallenges';
 import EnergyMonitoring from './screens/EnergyMonitoring';
 import LoadingScreen from './screens/LoadingScreen';
@@ -46,12 +47,12 @@ const HomeScreen = ({ navigation }) => {
 
         <TouchableOpacity 
           style={styles.card}
-          onPress={() => navigation.navigate('MoodTracking')}
+          onPress={() => navigation.navigate('YoshinChatbot')}
         >
           <View style={styles.iconContainer}>
-            <Text style={styles.icon}>☺</Text>
+            <Text style={styles.icon}>💬</Text>
           </View>
-          <Text style={styles.cardText}>Mood{"\n"}Tracking</Text>
+          <Text style={styles.cardText}>Yoshin{"\n"}Assistant</Text>
         </TouchableOpacity>
 
         <TouchableOpacity 
@@ -74,6 +75,8 @@ const HomeScreen = ({ navigation }) => {
           <Text style={styles.cardText}>Energy{"\n"}Monitoring</Text>
         </TouchableOpacity>
       </View>
+
+      <MotivationalQuote />
 
       <View style={styles.bottomNav}>
         <View style={styles.navItem}>
@@ -116,7 +119,7 @@ export default function App() {
           options={{ headerShown: false }}
         />
         <Stack.Screen name="TodaySchedule" component={TodaySchedule} />
-        <Stack.Screen name="MoodTracking" component={MoodTracking} />
+        <Stack.Screen name="YoshinChatbot" component={YoshinChatbot} />
         <Stack.Screen name="CollaborativeChallenges" component={CollaborativeChallenges} />
         <Stack.Screen name="EnergyMonitoring" component={EnergyMonitoring} />
       </Stack.Navigator>
