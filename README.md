@@ -181,14 +181,6 @@ See the [LICENSE](LICENSE) file for more details.
 
 **Project Repository**: [https://github.com/yourusername/productivity-app](https://github.com/yourusername/productivity-app)
 
-Have questions or suggestions? Feel free to open an issue or reach out!
-```
 
----
 
-Let me know if you want:
-- Badges (build, version, license)
-- IoT setup documentation as a separate `iot/README.md`
-- Demo video or screenshots integration
 
-Want me to generate a matching `LICENSE` file too?
