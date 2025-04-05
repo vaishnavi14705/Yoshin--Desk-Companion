@@ -1,10 +1,13 @@
+<p align="center">
+  <img src="https://your-image-url.com/yoshin-logo.png" alt="Yoshin Logo" width="200">
+</p>
 
 ---
 
 
 # 🧠 Yoshin: Desk Companion
 
-**Yoshin** is an IoT-based productivity and focus assistant, designed to improve **daily efficiency**, **task completion**, and **habit building**. Combined with a modern **React Native mobile app**, Yoshin offers real-time facial recognition, task monitoring, energy and mood tracking, and smart AI-driven recommendations.
+**Yoshin** is an IoT-based productivity and focus assistant, designed to improve **daily efficiency**, **task completion**, and **habit building** with constant tracking of behaviour patter recognisation ,using machine learning classfiers. Combined with a modern **React Native mobile app**, Yoshin offers real-time facial recognition, task monitoring, energy and mood tracking, and smart AI-driven recommendations.
 
 ---
 
