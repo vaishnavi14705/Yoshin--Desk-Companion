@@ -1,8 +1,12 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { StyleSheet, View, Text, TouchableOpacity, StatusBar } from 'react-native';
+import { StyleSheet, View, Text, StatusBar } from 'react-native';
+import { useSpring, animated } from '@react-spring/native';
 import MotivationalQuote from './components/MotivationalQuote';
+import { TouchableOpacity, ScrollView } from 'react-native';
+
+const AnimatedText = animated(Text);
 
 // Screen components
 import TodaySchedule from './screens/TodaySchedule';
@@ -14,67 +18,75 @@ import LoadingScreen from './screens/LoadingScreen';
 const Stack = createNativeStackNavigator();
 
 const HomeScreen = ({ navigation }) => {
+  const greetingSpring = useSpring({
+    from: { opacity: 0, translateY: 50, scale: 0.9 },
+    to: { opacity: 1, translateY: 0, scale: 1 },
+    config: { tension: 100, friction: 10 },
+  });
+
   return (
     <View style={styles.container}>
       <StatusBar barStyle="light-content" />
       <View style={styles.header}>
-        <Text style={styles.greeting}>Hello,{"\n"}Shubh Zatakia!</Text>
+        <AnimatedText
+          style={[
+            styles.greeting,
+            {
+              opacity: greetingSpring.opacity,
+              transform: [
+                { translateY: greetingSpring.translateY },
+                { scale: greetingSpring.scale }
+              ]
+            }
+          ]}
+        >Hello,{"\n"}Shubh Zatakia!</AnimatedText>
+        
         <View style={styles.statusCard}>
-          <Text style={styles.statusText}>Current Status</Text>
-          <View style={styles.statusRow}>
-            <Text style={styles.productiveText}>75%{"\n"}productive</Text>
+          <View style={styles.statusHeader}>
+            <Text style={styles.statusText}>Current Status</Text>
             <TouchableOpacity style={styles.menuButton}>
-              <View style={styles.menuLine} />
-              <View style={styles.menuLine} />
-              <View style={styles.menuLine} />
+              <Text style={styles.menuIcon}>☰</Text>
             </TouchableOpacity>
+          </View>
+          <View style={styles.statusBody}>
+            <Text style={styles.productiveText}>75%{"\n"}productive</Text>
           </View>
         </View>
       </View>
 
       <Text style={styles.helpText}>How can we help you?</Text>
 
-      <View style={styles.grid}>
-        <TouchableOpacity 
-          style={styles.card}
-          onPress={() => navigation.navigate('TodaySchedule')}
-        >
-          <View style={styles.iconContainer}>
-            <Text style={styles.icon}>↓</Text>
-          </View>
-          <Text style={styles.cardText}>Today's{"\n"}Schedule</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity 
-          style={styles.card}
-          onPress={() => navigation.navigate('YoshinChatbot')}
-        >
-          <View style={styles.iconContainer}>
-            <Text style={styles.icon}>💬</Text>
-          </View>
-          <Text style={styles.cardText}>Yoshin{"\n"}Assistant</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity 
-          style={styles.card}
-          onPress={() => navigation.navigate('CollaborativeChallenges')}
-        >
-          <View style={styles.iconContainer}>
-            <Text style={styles.icon}>✓</Text>
-          </View>
-          <Text style={styles.cardText}>Collaborative{"\n"}Challenges</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity 
-          style={styles.card}
-          onPress={() => navigation.navigate('EnergyMonitoring')}
-        >
-          <View style={styles.iconContainer}>
-            <Text style={styles.icon}>≡</Text>
-          </View>
-          <Text style={styles.cardText}>Energy{"\n"}Monitoring</Text>
-        </TouchableOpacity>
-      </View>
+      <ScrollView contentContainerStyle={styles.gridContainer}>
+        {[
+          {
+            icon: '📅',
+            text: 'Today\'s\nSchedule',
+            onPress: () => navigation.navigate('TodaySchedule')
+          },
+          {
+            icon: '💬',
+            text: 'Yoshin\nAssistant',
+            onPress: () => navigation.navigate('YoshinChatbot')
+          },
+          {
+            icon: '✓',
+            text: 'Collaborative\nChallenges',
+            onPress: () => navigation.navigate('CollaborativeChallenges')
+          },
+          {
+            icon: '📊',
+            text: 'Energy\nMonitoring',
+            onPress: () => navigation.navigate('EnergyMonitoring')
+          }
+        ].map((item, index) => (
+          <TouchableOpacity key={index} style={styles.card} onPress={item.onPress}>
+            <View style={styles.iconContainer}>
+              <Text style={styles.cardIcon}>{item.icon}</Text>
+            </View>
+            <Text style={styles.cardText}>{item.text}</Text>
+          </TouchableOpacity>
+        ))}
+      </ScrollView>
 
       <MotivationalQuote />
 
@@ -144,36 +156,38 @@ const styles = StyleSheet.create({
   statusCard: {
     backgroundColor: '#2A2A2A',
     borderRadius: 15,
+    marginBottom: 20,
     padding: 15,
   },
-  statusText: {
-    color: '#808080',
-    marginBottom: 5,
-  },
-  statusRow: {
+  statusHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
+    paddingHorizontal: 10,
   },
-  productiveText: {
-    color: '#FFFFFF',
-    fontSize: 18,
+  statusText: {
+    color: '#808080',
+    fontSize: 16,
   },
   menuButton: {
     padding: 5,
   },
-  menuLine: {
-    width: 20,
-    height: 2,
-    backgroundColor: '#FFFFFF',
-    marginVertical: 2,
+  menuIcon: {
+    color: '#FFFFFF',
+    fontSize: 24,
+  },
+  productiveText: {
+    color: '#FFFFFF',
+    fontSize: 18,
+    padding: 10,
+    textAlign: 'center',
   },
   helpText: {
     color: '#808080',
     fontSize: 16,
     marginVertical: 20,
   },
-  grid: {
+  gridContainer: {
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'space-between',
@@ -195,9 +209,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 10,
   },
-  icon: {
+  cardIcon: {
+    fontSize: 24,
     color: '#B4FF39',
-    fontSize: 20,
   },
   cardText: {
     color: '#FFFFFF',

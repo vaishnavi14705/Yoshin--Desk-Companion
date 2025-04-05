@@ -1,17 +1,64 @@
-import React, { useState } from 'react';
-import { StyleSheet, View, Text, TextInput, TouchableOpacity, FlatList, Image, KeyboardAvoidingView, Platform } from 'react-native';
+import React, { useState, useRef, useEffect } from 'react';
+import { StyleSheet, View, Text, TextInput, TouchableOpacity, FlatList, Image, KeyboardAvoidingView, Platform, Animated } from 'react-native';
 
-const YoshinChatbot = () => {
+const YoshinChatbot = ({ route, navigation }) => {
+  const bounceAnim = useRef(new Animated.Value(0)).current;
+  const rotateAnim = useRef(new Animated.Value(0)).current;
+
+  const startBounceAnimation = () => {
+    Animated.sequence([
+      Animated.spring(bounceAnim, {
+        toValue: 1,
+        friction: 3,
+        tension: 40,
+        useNativeDriver: true,
+      }),
+      Animated.spring(bounceAnim, {
+        toValue: 0,
+        friction: 3,
+        tension: 40,
+        useNativeDriver: true,
+      })
+    ]).start();
+  };
+
+  const startRotateAnimation = () => {
+    Animated.loop(
+      Animated.sequence([
+        Animated.timing(rotateAnim, {
+          toValue: 1,
+          duration: 2000,
+          useNativeDriver: true
+        }),
+        Animated.timing(rotateAnim, {
+          toValue: 0,
+          duration: 2000,
+          useNativeDriver: true
+        })
+      ])
+    ).start();
+  };
+
+  useEffect(() => {
+    startRotateAnimation();
+  }, []);
+  React.useEffect(() => {
+    if (route.params?.question) {
+      setNewMessage(route.params.question);
+      sendMessage(route.params.question);
+    }
+  }, [route.params?.question]);
+
   const [messages, setMessages] = useState([
     { id: '1', text: 'Hello! I\'m Yoshin. How can I help you today?', isBot: true },
   ]);
   const [newMessage, setNewMessage] = useState('');
 
-  const sendMessage = () => {
-    if (newMessage.trim().length > 0) {
+  const sendMessage = (messageText = newMessage) => {
+    if (messageText.trim().length > 0) {
       setMessages(prevMessages => [
         ...prevMessages,
-        { id: Date.now().toString(), text: newMessage, isBot: false },
+        { id: Date.now().toString(), text: messageText, isBot: false },
       ]);
       setNewMessage('');
       // Simulate bot response
@@ -20,6 +67,7 @@ const YoshinChatbot = () => {
           ...prevMessages,
           { id: Date.now().toString(), text: 'I understand. Let me help you with that.', isBot: true },
         ]);
+        startBounceAnimation();
       }, 1000);
     }
   };
@@ -27,9 +75,20 @@ const YoshinChatbot = () => {
   const renderMessage = ({ item }) => (
     <View style={[styles.messageContainer, item.isBot ? styles.botMessage : styles.userMessage]}>
       {item.isBot && (
-        <View style={styles.botAvatar}>
+        <Animated.View style={[styles.botAvatar, {
+          transform: [
+            { scale: bounceAnim.interpolate({
+              inputRange: [0, 1],
+              outputRange: [1, 1.2]
+            })},
+            { rotate: rotateAnim.interpolate({
+              inputRange: [0, 1],
+              outputRange: ['0deg', '360deg']
+            })}
+          ]
+        }]}>
           <Text style={styles.botAvatarText}>Y</Text>
-        </View>
+        </Animated.View>
       )}
       <View style={[styles.messageBubble, item.isBot ? styles.botBubble : styles.userBubble]}>
         <Text style={styles.messageText}>{item.text}</Text>

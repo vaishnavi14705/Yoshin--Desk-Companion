@@ -1,8 +1,8 @@
 import React from 'react';
-import { StyleSheet, View, Dimensions } from 'react-native';
+import { StyleSheet, View, Dimensions, Text, TouchableOpacity, ScrollView } from 'react-native';
 import { LineChart } from 'react-native-chart-kit';
 
-const EnergyMonitoring = () => {
+const EnergyMonitoring = ({ navigation }) => {
   // Sample data - this can be replaced with real data later
   const data = {
     labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
@@ -38,6 +38,36 @@ const EnergyMonitoring = () => {
         }}
         style={styles.chart}
       />
+
+      <View style={styles.questionsContainer}>
+        <Text style={styles.questionsTitle}>Frequently Asked Questions</Text>
+        <ScrollView>
+          <TouchableOpacity 
+            style={styles.questionItem}
+            onPress={() => navigation.navigate('YoshinChatbot', { question: 'How is my energy score calculated?' })}
+          >
+            <Text style={styles.questionText}>How is my energy score calculated?</Text>
+          </TouchableOpacity>
+          <TouchableOpacity 
+            style={styles.questionItem}
+            onPress={() => navigation.navigate('YoshinChatbot', { question: 'What factors affect my productivity levels?' })}
+          >
+            <Text style={styles.questionText}>What factors affect my productivity levels?</Text>
+          </TouchableOpacity>
+          <TouchableOpacity 
+            style={styles.questionItem}
+            onPress={() => navigation.navigate('YoshinChatbot', { question: 'How can I improve my daily energy patterns?' })}
+          >
+            <Text style={styles.questionText}>How can I improve my daily energy patterns?</Text>
+          </TouchableOpacity>
+          <TouchableOpacity 
+            style={styles.questionItem}
+            onPress={() => navigation.navigate('YoshinChatbot', { question: 'Tips for maintaining consistent energy levels?' })}
+          >
+            <Text style={styles.questionText}>Tips for maintaining consistent energy levels?</Text>
+          </TouchableOpacity>
+        </ScrollView>
+      </View>
     </View>
   );
 };
@@ -47,12 +77,32 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#1E1E1E',
     padding: 20,
-    justifyContent: 'center',
-    alignItems: 'center',
   },
   chart: {
     marginVertical: 8,
     borderRadius: 16,
+  },
+  questionsContainer: {
+    marginTop: 20,
+    backgroundColor: '#2A2A2A',
+    borderRadius: 10,
+    padding: 15,
+    maxHeight: 200,
+  },
+  questionsTitle: {
+    color: '#B4FF39',
+    fontSize: 16,
+    marginBottom: 10,
+  },
+  questionItem: {
+    backgroundColor: '#3A3A3A',
+    borderRadius: 8,
+    padding: 12,
+    marginBottom: 8,
+  },
+  questionText: {
+    color: '#FFFFFF',
+    fontSize: 14,
   },
 });
 

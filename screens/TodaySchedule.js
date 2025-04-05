@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, Text, TextInput, TouchableOpacity, FlatList } from 'react-native';
+import { StyleSheet, View, Text, TextInput, TouchableOpacity, FlatList, ScrollView } from 'react-native';
 
-const TodaySchedule = () => {
+const TodaySchedule = ({ navigation }) => {
   const [tasks, setTasks] = useState([]);
   const [newTask, setNewTask] = useState('');
 
@@ -61,6 +61,36 @@ const TodaySchedule = () => {
         keyExtractor={item => item.id}
         style={styles.taskList}
       />
+
+      <View style={styles.questionsContainer}>
+        <Text style={styles.questionsTitle}>Frequently Asked Questions</Text>
+        <ScrollView>
+          <TouchableOpacity 
+            style={styles.questionItem}
+            onPress={() => navigation.navigate('YoshinChatbot', { question: 'How can I optimize my daily schedule?' })}
+          >
+            <Text style={styles.questionText}>How can I optimize my daily schedule?</Text>
+          </TouchableOpacity>
+          <TouchableOpacity 
+            style={styles.questionItem}
+            onPress={() => navigation.navigate('YoshinChatbot', { question: 'What are some time management tips?' })}
+          >
+            <Text style={styles.questionText}>What are some time management tips?</Text>
+          </TouchableOpacity>
+          <TouchableOpacity 
+            style={styles.questionItem}
+            onPress={() => navigation.navigate('YoshinChatbot', { question: 'How to prioritize tasks effectively?' })}
+          >
+            <Text style={styles.questionText}>How to prioritize tasks effectively?</Text>
+          </TouchableOpacity>
+          <TouchableOpacity 
+            style={styles.questionItem}
+            onPress={() => navigation.navigate('YoshinChatbot', { question: 'Tips for maintaining work-life balance?' })}
+          >
+            <Text style={styles.questionText}>Tips for maintaining work-life balance?</Text>
+          </TouchableOpacity>
+        </ScrollView>
+      </View>
     </View>
   );
 };
@@ -121,6 +151,28 @@ const styles = StyleSheet.create({
     color: '#B4FF39',
     fontSize: 12,
     textTransform: 'uppercase',
+  },
+  questionsContainer: {
+    marginTop: 20,
+    backgroundColor: '#2A2A2A',
+    borderRadius: 10,
+    padding: 15,
+    maxHeight: 200,
+  },
+  questionsTitle: {
+    color: '#B4FF39',
+    fontSize: 16,
+    marginBottom: 10,
+  },
+  questionItem: {
+    backgroundColor: '#3A3A3A',
+    borderRadius: 8,
+    padding: 12,
+    marginBottom: 8,
+  },
+  questionText: {
+    color: '#FFFFFF',
+    fontSize: 14,
   },
 });
 

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, Text, TouchableOpacity, FlatList } from 'react-native';
+import { StyleSheet, View, Text, TouchableOpacity, FlatList, ScrollView } from 'react-native';
 
-const CollaborativeChallenges = () => {
+const CollaborativeChallenges = ({ navigation }) => {
   const [challenges] = useState([
     {
       id: '1',
@@ -61,6 +61,36 @@ const CollaborativeChallenges = () => {
         keyExtractor={item => item.id}
         style={styles.challengeList}
       />
+
+      <View style={styles.questionsContainer}>
+        <Text style={styles.questionsTitle}>Frequently Asked Questions</Text>
+        <ScrollView>
+          <TouchableOpacity 
+            style={styles.questionItem}
+            onPress={() => navigation.navigate('YoshinChatbot', { question: 'How do collaborative challenges work?' })}
+          >
+            <Text style={styles.questionText}>How do collaborative challenges work?</Text>
+          </TouchableOpacity>
+          <TouchableOpacity 
+            style={styles.questionItem}
+            onPress={() => navigation.navigate('YoshinChatbot', { question: 'What are the benefits of joining a challenge?' })}
+          >
+            <Text style={styles.questionText}>What are the benefits of joining a challenge?</Text>
+          </TouchableOpacity>
+          <TouchableOpacity 
+            style={styles.questionItem}
+            onPress={() => navigation.navigate('YoshinChatbot', { question: 'How can I create an effective challenge?' })}
+          >
+            <Text style={styles.questionText}>How can I create an effective challenge?</Text>
+          </TouchableOpacity>
+          <TouchableOpacity 
+            style={styles.questionItem}
+            onPress={() => navigation.navigate('YoshinChatbot', { question: 'Tips for staying motivated during challenges?' })}
+          >
+            <Text style={styles.questionText}>Tips for staying motivated during challenges?</Text>
+          </TouchableOpacity>
+        </ScrollView>
+      </View>
     </View>
   );
 };
@@ -123,6 +153,28 @@ const styles = StyleSheet.create({
   },
   statusText: {
     color: '#B4FF39',
+  },
+  questionsContainer: {
+    marginTop: 20,
+    backgroundColor: '#2A2A2A',
+    borderRadius: 10,
+    padding: 15,
+    maxHeight: 200,
+  },
+  questionsTitle: {
+    color: '#B4FF39',
+    fontSize: 16,
+    marginBottom: 10,
+  },
+  questionItem: {
+    backgroundColor: '#3A3A3A',
+    borderRadius: 8,
+    padding: 12,
+    marginBottom: 8,
+  },
+  questionText: {
+    color: '#FFFFFF',
+    fontSize: 14,
   },
 });
 
